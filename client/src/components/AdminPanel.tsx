@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, ShieldCheck, ShieldAlert, Trash2, Edit3, Search, Mail, Key, CheckCircle2, XCircle } from 'lucide-react';
 
@@ -28,7 +29,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ token }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -64,7 +65,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ token }) => {
     ));
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}/approve`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users/${userId}/approve`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -81,7 +82,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ token }) => {
   const handleDeleteUser = async (userId: string) => {
     if (!window.confirm('Are you sure you want to delete this user? All their data will be lost.')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -100,7 +101,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ token }) => {
     e.preventDefault();
     if (!editingUser) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${editingUser.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/admin/users/${editingUser.id}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',

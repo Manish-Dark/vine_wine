@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Wine, WineFormData, FilterState } from '../types/wine';
 
-const API_BASE = 'http://localhost:5000/api/wines';
+import { API_BASE_URL } from '../constants';
+
+const API_BASE = `${API_BASE_URL}/api/wines`;
 
 async function apiFetch<T>(url: string, options?: RequestInit, token?: string | null): Promise<T> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };

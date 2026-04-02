@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { API_BASE_URL } from '../constants';
 
 interface User {
   id: string;
@@ -35,7 +36,7 @@ export function useAuth() {
   }, [auth]);
 
   const login = useCallback(async (email: string, password: string) => {
-    const res = await fetch('http://localhost:5000/api/auth/login', {
+    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -46,7 +47,7 @@ export function useAuth() {
   }, []);
 
   const register = useCallback(async (name: string, email: string, password: string): Promise<string | void> => {
-    const res = await fetch('http://localhost:5000/api/auth/register', {
+    const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
