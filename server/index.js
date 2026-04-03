@@ -11,10 +11,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ────────────────────────────────────────────────────────────
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'https://vine-wine.onrender.com', 'https://vine-wine.vercel.app'];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://vine-wine.onrender.com', 'https://vine-wine.vercel.app'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  optionsSuccessStatus: 200
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
