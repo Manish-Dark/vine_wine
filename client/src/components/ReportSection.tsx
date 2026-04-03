@@ -213,7 +213,10 @@ export const ReportSection: React.FC<ReportSectionProps> = ({ token }) => {
                     <td>₹{wine.price.toLocaleString('en-IN')}</td>
                     <td style={{ color: 'var(--gold)' }}>₹{(wine.otherExpense || 0).toLocaleString('en-IN')}</td>
                     <td style={{ fontWeight: 600, color: 'var(--primary)' }}>₹{(wine.sellingPrice || 0).toLocaleString('en-IN')}</td>
-                    <td style={{ fontWeight: 700, color: '#27ae60' }}>₹{(((wine.sold || 0) * (wine.sellingPrice || 0)) - ((wine.sold || 0) * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}</td>
+                    <td style={{ 
+                      fontWeight: 700, 
+                      color: (((wine.sold || 0) * (wine.sellingPrice || 0)) - ((wine.sold || 0) * wine.price) - (wine.otherExpense || 0)) < 0 ? '#d63031' : '#27ae60' 
+                    }}>₹{(((wine.sold || 0) * (wine.sellingPrice || 0)) - ((wine.sold || 0) * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}</td>
                   </tr>
                 ))}
               </tbody>

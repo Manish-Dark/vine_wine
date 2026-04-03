@@ -62,7 +62,10 @@ export const WineTable: React.FC<WineTableProps> = ({
               <td style={{ fontWeight: 600, color: 'var(--primary)' }}>₹{(wine.sellingPrice || 0).toLocaleString('en-IN')}</td>
               <td style={{ fontSize: '0.85em', color: 'var(--text-secondary)' }}>₹{wine.price.toLocaleString('en-IN')}</td>
               <td style={{ fontSize: '0.85em', color: 'var(--gold)' }}>₹{(wine.otherExpense || 0).toLocaleString('en-IN')}</td>
-              <td style={{ fontWeight: 700, color: '#27ae60' }}>
+              <td style={{ 
+                fontWeight: 700, 
+                color: ((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)) < 0 ? '#d63031' : '#27ae60' 
+              }}>
                 ₹{((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}
               </td>
               <td>

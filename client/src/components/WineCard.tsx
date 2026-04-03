@@ -94,15 +94,15 @@ export const WineCard: React.FC<WineCardProps> = ({
           <div style={{ 
             marginTop: '4px',
             padding: '4px 8px',
-            background: 'rgba(39, 174, 96, 0.08)',
-            border: '1px solid rgba(39, 174, 96, 0.2)',
+            background: ((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)) < 0 ? 'rgba(214, 48, 49, 0.08)' : 'rgba(39, 174, 96, 0.08)',
+            border: `1px solid ${((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)) < 0 ? 'rgba(214, 48, 49, 0.2)' : 'rgba(39, 174, 96, 0.2)'}`,
             borderRadius: '6px',
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px'
           }}>
-            <span style={{ fontSize: '10px', fontWeight: 700, color: '#27ae60', textTransform: 'uppercase' }}>Profit:</span>
-            <span style={{ fontSize: '13px', fontWeight: 800, color: '#27ae60' }}>
+            <span style={{ fontSize: '10px', fontWeight: 700, color: ((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)) < 0 ? '#d63031' : '#27ae60', textTransform: 'uppercase' }}>Profit:</span>
+            <span style={{ fontSize: '13px', fontWeight: 800, color: ((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)) < 0 ? '#d63031' : '#27ae60' }}>
               ₹{((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}
             </span>
           </div>
