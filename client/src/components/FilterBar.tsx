@@ -14,6 +14,7 @@ interface FilterBarProps {
 
 const SORT_OPTIONS: Array<{ value: SortField; label: string }> = [
   { value: 'name', label: 'Name' },
+  { value: 'vintage', label: 'Date' },
   { value: 'price', label: 'Cost Price' },
   { value: 'sellingPrice', label: 'Selling Price' },
   { value: 'quantity', label: 'Quantity' },

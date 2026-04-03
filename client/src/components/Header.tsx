@@ -1,11 +1,10 @@
-import React from 'react';
-import { Wine, Plus, Moon, Sun, LayoutGrid, FileText, LogIn, ShieldAlert } from 'lucide-react';
+import { Wine, Plus, Moon, Sun, LayoutGrid, FileText, LogIn, ShieldAlert, ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface HeaderProps {
   onAddWine: () => void;
-  currentPage: 'cellar' | 'reports' | 'admin';
-  onPageChange: (page: 'cellar' | 'reports' | 'admin') => void;
+  currentPage: 'cellar' | 'reports' | 'sales' | 'admin';
+  onPageChange: (page: 'cellar' | 'reports' | 'sales' | 'admin') => void;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   user: { name: string; role: 'user' | 'admin' } | null;
@@ -47,6 +46,13 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <LayoutGrid size={18} />
               <span>Cellar</span>
+            </button>
+            <button 
+              className={`nav-link ${currentPage === 'sales' ? 'active' : ''}`}
+              onClick={() => onPageChange('sales')}
+            >
+              <ShoppingCart size={18} />
+              <span>Sales (POS)</span>
             </button>
             <button 
               className={`nav-link ${currentPage === 'reports' ? 'active' : ''}`}
@@ -101,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
             whileTap={{ scale: 0.96 }}
           >
             <Plus size={18} />
-            <span>Add Wine</span>
+            <span>Add Shop</span>
           </motion.button>
         )}
 

@@ -1,19 +1,17 @@
-export type WineType = 'Red' | 'White' | 'Rosé' | 'Sparkling' | 'Dessert' | 'Fortified';
 
 export interface Wine {
   id: string;
   name: string;
   shopName?: string;
-  type: WineType;
-  region: string;
-  country: string;
+  shopPlace?: string;
+  size: 'Half' | 'Full' | 'Quarter' | '900 ml';
   vintage: string;
   quantity: number;
   price: number;
   sellingPrice: number;
   otherExpense: number;
+  sold: number;
   rating: number;
-  notes: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -33,7 +31,6 @@ export type SortOrder = 'asc' | 'desc';
 
 export interface FilterState {
   search: string;
-  type: WineType | 'All';
   sortField: SortField;
   sortOrder: SortOrder;
   startDate?: string; // YYYY-MM-DD

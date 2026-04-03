@@ -38,17 +38,17 @@ export const ReportSection: React.FC<ReportSectionProps> = ({ token }) => {
       }
 
       const doc = new jsPDF();
-      const tableColumn = ["Wine Name", "Shop Name", "Type", "Vintage", "Qty", "Price", "Exp", "Selling", "Profit"];
+      const tableColumn = ["Shop Name", "Wine Name", "Date", "In Stock", "Sold", "Price", "Exp", "Selling", "Profit"];
       const tableRows: any[] = [];
 
       wines.forEach(wine => {
-        const profit = (wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0);
+        const profit = ((wine.sold || 0) * (wine.sellingPrice || 0)) - ((wine.sold || 0) * wine.price) - (wine.otherExpense || 0);
         const wineData = [
-          wine.name,
           wine.shopName || '-',
-          wine.type,
+          `${wine.name} (${wine.size})`,
           wine.vintage,
           wine.quantity,
+          wine.sold || 0,
           (wine.price || 0).toLocaleString('en-IN'),
           (wine.otherExpense || 0).toLocaleString('en-IN'),
           (wine.sellingPrice || 0).toLocaleString('en-IN'),
@@ -180,9 +180,9 @@ export const ReportSection: React.FC<ReportSectionProps> = ({ token }) => {
                 <tr>
                   <th>Shop Name</th>
                   <th>Wine</th>
-                  <th>Type</th>
-                  <th>Vintage</th>
-                  <th>Qty</th>
+                  <th>Date</th>
+                  <th>In Stock</th>
+                  <th>Sold</th>
                   <th>Price</th>
                   <th>Other Exp.</th>
                   <th>Selling</th>
@@ -193,14 +193,27 @@ export const ReportSection: React.FC<ReportSectionProps> = ({ token }) => {
                 {wines.map((wine) => (
                   <tr key={wine.id} className="table-row">
                     <td>{wine.shopName || '-'}</td>
-                    <td className="td-name">{wine.name}</td>
-                    <td><span className={`badge badge-${wine.type.toLowerCase()}`}>{wine.type}</span></td>
+                    <td className="td-name">
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                        <span>{wine.name}</span>
+                        <span style={{ 
+                          fontSize: '0.7rem', 
+                          padding: '2px 6px', 
+                          background: 'var(--gold-dim)', 
+                          color: 'var(--gold)', 
+                          borderRadius: '4px', 
+                          fontWeight: 700,
+                          textTransform: 'uppercase'
+                        }}>{wine.size}</span>
+                      </div>
+                    </td>
                     <td>{wine.vintage}</td>
-                    <td>{wine.quantity}</td>
+                    <td style={{ opacity: 0.8 }}>{wine.quantity}</td>
+                    <td style={{ fontWeight: 600 }}>{wine.sold || 0}</td>
                     <td>₹{wine.price.toLocaleString('en-IN')}</td>
                     <td style={{ color: 'var(--gold)' }}>₹{(wine.otherExpense || 0).toLocaleString('en-IN')}</td>
                     <td style={{ fontWeight: 600, color: 'var(--primary)' }}>₹{(wine.sellingPrice || 0).toLocaleString('en-IN')}</td>
-                    <td style={{ fontWeight: 700, color: '#27ae60' }}>₹{((wine.quantity * (wine.sellingPrice || 0)) - (wine.quantity * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}</td>
+                    <td style={{ fontWeight: 700, color: '#27ae60' }}>₹{(((wine.sold || 0) * (wine.sellingPrice || 0)) - ((wine.sold || 0) * wine.price) - (wine.otherExpense || 0)).toLocaleString('en-IN')}</td>
                   </tr>
                 ))}
               </tbody>

@@ -12,20 +12,15 @@ const WineSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
-    type: {
-      type: String,
-      enum: ['Red', 'White', 'Rosé', 'Sparkling', 'Dessert', 'Fortified', 'Other'],
-      default: 'Other',
-    },
-    region: {
+    shopPlace: {
       type: String,
       trim: true,
-      default: 'Unknown',
+      default: '',
     },
-    country: {
+    size: {
       type: String,
-      trim: true,
-      default: 'Unknown',
+      enum: ['Half', 'Full', 'Quarter', '900 ml'],
+      default: 'Full',
     },
     vintage: {
       type: String,
@@ -60,10 +55,10 @@ const WineSchema = new mongoose.Schema(
       default: 0,
       min: 0,
     },
-    notes: {
-      type: String,
-      trim: true,
-      default: '',
+    sold: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
         { shopName: { $regex: search, $options: 'i' } },
+        { shopPlace: { $regex: search, $options: 'i' } },
       ];
     }
 
@@ -68,10 +69,18 @@ router.get('/:id', async (req, res) => {
 // ─── POST add wine ───────────────────────────────────────────────────────────
 router.post('/', async (req, res) => {
   try {
-    const wineData = { ...req.body, userId: req.userId };
-    const wine = new Wine(wineData);
-    await wine.save();
-    res.status(201).json(wine);
+    if (Array.isArray(req.body)) {
+      // Bulk add
+      const winesData = req.body.map(item => ({ ...item, userId: req.userId }));
+      const wines = await Wine.insertMany(winesData);
+      return res.status(201).json(wines);
+    } else {
+      // Single add
+      const wineData = { ...req.body, userId: req.userId };
+      const wine = new Wine(wineData);
+      await wine.save();
+      return res.status(201).json(wine);
+    }
   } catch (err) {
     if (err.name === 'ValidationError') {
       return res.status(400).json({ message: 'Validation error', error: err.message });
@@ -104,6 +113,12 @@ router.patch('/:id/quantity', async (req, res) => {
     const { delta } = req.body; 
     const wine = await Wine.findOne({ _id: req.params.id, userId: req.userId });
     if (!wine) return res.status(404).json({ message: 'Wine not found or unauthorized' });
+
+    // If delta is negative, it's a sale. Increment the sold counter.
+    if (delta < 0) {
+      const soldAmount = Math.min(wine.quantity, Math.abs(delta));
+      wine.sold = (wine.sold || 0) + soldAmount;
+    }
 
     wine.quantity = Math.max(0, wine.quantity + delta);
     await wine.save();

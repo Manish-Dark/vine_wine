@@ -26,7 +26,7 @@ export const WineTable: React.FC<WineTableProps> = ({
       <table className="wine-table">
         <thead>
           <tr>
-            <th>Shop Name</th>
+            <th>Shop</th>
             <th>Wine</th>
             <th>Date</th>
             <th>Selling Price</th>
@@ -48,9 +48,15 @@ export const WineTable: React.FC<WineTableProps> = ({
               transition={{ delay: i * 0.04 }}
               layout
             >
-              <td>{wine.shopName || '-'}</td>
+              <td>
+                <div style={{ fontWeight: 600 }}>{wine.shopName || '-'}</div>
+                <div style={{ fontSize: '0.75rem', opacity: 0.7 }}>{wine.shopPlace || ''}</div>
+              </td>
               <td className="td-name">
-                {wine.name}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>{wine.name}</span>
+                  <span style={{ fontSize: '0.7rem', padding: '2px 6px', background: 'var(--gold-dim)', color: 'var(--gold)', borderRadius: '4px', fontWeight: 600 }}>{wine.size}</span>
+                </div>
               </td>
               <td>{wine.vintage}</td>
               <td style={{ fontWeight: 600, color: 'var(--primary)' }}>₹{(wine.sellingPrice || 0).toLocaleString('en-IN')}</td>

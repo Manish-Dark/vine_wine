@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Edit2, Trash2, Calendar, IndianRupee, Store } from 'lucide-react';
+import { Edit2, Trash2, Calendar, IndianRupee, Store, Package } from 'lucide-react';
 import type { Wine } from '../types/wine';
 
 interface WineCardProps {
@@ -33,26 +33,47 @@ export const WineCard: React.FC<WineCardProps> = ({
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '12px', marginBottom: '2px' }}>
           <Store size={11} style={{ color: 'var(--gold)' }} />
           <span style={{ fontSize: '11px', color: 'var(--gold)', fontWeight: 600, letterSpacing: '0.4px', textTransform: 'uppercase' }}>
-            {wine.shopName}
+            {wine.shopName} {wine.shopPlace && `• ${wine.shopPlace}`}
           </span>
         </div>
       )}
 
-      {/* Wine name */}
-      <h3 className="card-name" style={{ marginTop: wine.shopName ? '2px' : '12px' }}>{wine.name}</h3>
+      {/* Wine name & Size */}
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '12px', 
+        marginTop: wine.shopName ? '2px' : '12px' 
+      }}>
+        <h3 className="card-name" style={{ marginTop: 0, marginBottom: 4 }}>{wine.name}</h3>
+        <span style={{ 
+          fontSize: '10px', 
+          padding: '2px 8px', 
+          background: 'rgba(191, 155, 48, 0.1)', 
+          color: 'var(--gold)', 
+          borderRadius: '6px', 
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          border: '1px solid rgba(191, 155, 48, 0.2)',
+          whiteSpace: 'nowrap'
+        }}>
+          {wine.size}
+        </span>
+      </div>
 
       {/* Meta info */}
-      <div className="card-meta">
+      <div className="card-meta" style={{ display: 'flex', gap: '12px' }}>
         <span className="card-meta-item">
           <Calendar size={12} />
           {wine.vintage}
         </span>
+        <span className="card-meta-item" style={{ color: 'var(--gold)', fontWeight: 600 }}>
+          <Package size={12} />
+          {wine.size}
+        </span>
       </div>
 
-      {/* Notes */}
-      {wine.notes && (
-        <p className="card-notes">{wine.notes}</p>
-      )}
 
       {/* Price, quantity, and profit breakdown */}
       <div className="card-footer">
@@ -87,10 +108,21 @@ export const WineCard: React.FC<WineCardProps> = ({
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-          <div className="card-quantity">
-            <span className={`qty-value ${wine.quantity === 0 ? 'zero' : wine.quantity <= 2 ? 'low' : ''}`}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+          <div className="card-quantity" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <span className={`qty-value ${wine.quantity === 0 ? 'zero' : wine.quantity <= 2 ? 'low' : ''}`} style={{ fontSize: '15px' }}>
               Qty: {wine.quantity}
+            </span>
+            <span style={{ 
+              fontSize: '11px', 
+              color: 'var(--gold)', 
+              fontWeight: 700, 
+              background: 'var(--gold-dim)', 
+              padding: '2px 8px', 
+              borderRadius: '6px',
+              marginTop: '2px'
+            }}>
+              Sold: {wine.sold || 0}
             </span>
           </div>
         </div>

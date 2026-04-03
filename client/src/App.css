@@ -92,10 +92,10 @@ body {
   position: relative;
 }
 
-.app-inner {
-  max-width: 1400px;
+.app-container {
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 40px;
   position: relative;
   z-index: 1;
 }
@@ -149,14 +149,13 @@ body {
   justify-content: space-between;
   padding: 24px 0;
   border-bottom: 1px solid var(--glass-border);
-  margin-bottom: 32px;
+  margin-bottom: 40px; 
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background: var(--bg-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transition: background-color var(--transition);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 .header::after {
@@ -336,9 +335,9 @@ body {
 /* ===== STATS BAR ===== */
 .stats-bar {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
 .stat-card {
@@ -1997,6 +1996,59 @@ body {
   
   .admin-modal-premium {
     padding: 24px 20px !important;
+  }
+}
+
+/* ===== BULK ENTRY STYLES ===== */
+.bulk-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bulk-modal::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+.entry-row {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entry-row:hover {
+  border-color: var(--primary-glow) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.remove-row-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.remove-row-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: var(--danger) !important;
+}
+
+.form-section-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.form-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .modal-container {
     margin: 10px !important;
     width: 95% !important;
   }
