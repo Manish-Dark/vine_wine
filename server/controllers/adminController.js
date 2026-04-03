@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Wine = require('../models/Wine');
 
 // Get all users
 exports.getUsers = async (req, res) => {
@@ -47,9 +48,16 @@ exports.toggleApproval = async (req, res) => {
 // Delete user
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const userId = req.params.id;
+
+    // Delete all wines belonging to this user
+    await Wine.deleteMany({ userId });
+
+    // Delete the user record
+    const user = await User.findByIdAndDelete(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'User deleted successfully' });
+
+    res.json({ message: 'User and all their data deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

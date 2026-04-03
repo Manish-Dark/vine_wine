@@ -20,7 +20,7 @@ const defaultForm: WineFormData = {
   region: 'Unknown',
   country: 'Unknown',
   vintage: '',
-  quantity: 1,
+  quantity: 0,
   price: 0,
   sellingPrice: 0,
   otherExpense: 0,
@@ -164,9 +164,9 @@ export const WineModal: React.FC<WineModalProps> = ({ isOpen, wine, onClose, onS
                     type="number"
                     min="0"
                     step="0.01"
-                    placeholder="0.00"
-                    value={form.price}
-                    onChange={(e) => set('price', parseFloat(e.target.value) || 0)}
+                    placeholder="Enter cost"
+                    value={form.price === 0 ? '' : form.price}
+                    onChange={(e) => set('price', e.target.value === '' ? 0 : parseFloat(e.target.value))}
                   />
                   {errors.price && <span className="form-error">{errors.price}</span>}
                 </div>
@@ -179,9 +179,9 @@ export const WineModal: React.FC<WineModalProps> = ({ isOpen, wine, onClose, onS
                     type="number"
                     min="0"
                     step="0.01"
-                    placeholder="0.00"
-                    value={form.sellingPrice}
-                    onChange={(e) => set('sellingPrice', parseFloat(e.target.value) || 0)}
+                    placeholder="Enter price"
+                    value={form.sellingPrice === 0 ? '' : form.sellingPrice}
+                    onChange={(e) => set('sellingPrice', e.target.value === '' ? 0 : parseFloat(e.target.value))}
                   />
                   {errors.sellingPrice && <span className="form-error">{errors.sellingPrice}</span>}
                 </div>
@@ -194,9 +194,9 @@ export const WineModal: React.FC<WineModalProps> = ({ isOpen, wine, onClose, onS
                     type="number"
                     min="0"
                     step="0.01"
-                    placeholder="0.00"
-                    value={form.otherExpense}
-                    onChange={(e) => set('otherExpense', parseFloat(e.target.value) || 0)}
+                    placeholder="Enter expense"
+                    value={form.otherExpense === 0 ? '' : form.otherExpense}
+                    onChange={(e) => set('otherExpense', e.target.value === '' ? 0 : parseFloat(e.target.value))}
                   />
                   {errors.otherExpense && <span className="form-error">{errors.otherExpense}</span>}
                 </div>
@@ -208,8 +208,9 @@ export const WineModal: React.FC<WineModalProps> = ({ isOpen, wine, onClose, onS
                     className={`form-input ${errors.quantity ? 'error' : ''}`}
                     type="number"
                     min="0"
-                    value={form.quantity}
-                    onChange={(e) => set('quantity', parseInt(e.target.value) || 0)}
+                    placeholder="Enter quantity"
+                    value={form.quantity === 0 ? '' : form.quantity}
+                    onChange={(e) => set('quantity', e.target.value === '' ? 0 : parseInt(e.target.value))}
                   />
                   {errors.quantity && <span className="form-error">{errors.quantity}</span>}
                 </div>
